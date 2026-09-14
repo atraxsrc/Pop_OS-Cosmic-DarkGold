@@ -1,0 +1,29 @@
+/* ==========================================================================
+   DarkGold / Harbor Dark - userContent.css
+   Based on Monochrome Dark + Cosmic Night v2 (variables only)
+
+   Color only. No size / position changes.
+
+   Install:  chrome/userContent.css   (same pref + restart as userChrome.css)
+   ========================================================================== */
+
+@-moz-document url-prefix("about:newtab"),
+               url-prefix("about:home"),
+               url-prefix("about:privatebrowsing") {
+
+  :root {
+    --newtab-primary-action-background: #C0AF7F !important;
+    --newtab-primary-action-background-dimmed: rgba(192, 175, 127, 0.25) !important;
+
+    --newtab-focus-border: #C0AF7F !important;
+    --newtab-focus-outline: #C0AF7F !important;
+    --newtab-textbox-focus-color: #C0AF7F !important;
+
+    --in-content-accent-color: #C0AF7F !important;
+    --in-content-accent-color-active: #E1CE98 !important;
+    --in-content-focus-outline-color: #C0AF7F !important;
+
+    --link-color: #a99b7a !important;
+    --link-color-hover: #efebdc !important;
+  }
+}

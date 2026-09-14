@@ -1,0 +1,120 @@
+/* ==========================================================================
+   DarkGold / Harbor Dark - userChrome.css
+   Based on Monochrome Dark + Cosmic Night v4 (minimal + scoped)
+
+   Colors from Harbor Dark:
+     bg #1B1B1B  elevated #252525  text #efebdc
+     gold #C0AF7F  brass #a99b7a  salmon #e58980
+     cream #E1CE98  dim #6d6d6d
+
+   No :root overrides — variables stay on the popup they belong to.
+
+   Install:
+     1. about:config -> toolkit.legacyUserProfileCustomizations.stylesheets = true
+     2. about:support -> Profile Directory -> Open Directory
+     3. put this file at  chrome/userChrome.css
+     4. FULL restart
+   ========================================================================== */
+
+/* ---------- rounded corners: URL bar + search ---------- */
+#urlbar-background,
+#searchbar {
+  border-radius: 10px !important;
+  border-color: #C0AF7F !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  box-shadow: 0 0 10px -3px #C0AF7F !important;
+}
+
+/* ---------- rounded corners: tabs ---------- */
+.tabbrowser-tab .tab-background {
+  border-radius: 10px !important;
+  margin-inline: 2px !important;
+  margin-block: 3px !important;
+}
+
+/* ---------- rounded corners: urlbar dropdown ---------- */
+.urlbarView-row {
+  border-radius: 7px !important;
+  margin-inline: 3px !important;
+}
+
+/* ---------- rounded corners: toolbar buttons ---------- */
+toolbarbutton .toolbarbutton-icon {
+  border-radius: 7px !important;
+}
+
+/* ==========================================================================
+   MENU COLORS - scoped to the popups only.
+   ========================================================================== */
+
+#appMenu-popup,
+#widget-overflow,
+#customizationui-widget-multiview,
+menupopup {
+  --panel-background: #252525 !important;
+  --panel-color: #E1CE98 !important;
+  --panel-border-color: #3D3D3D !important;
+  --panel-border-radius: 10px !important;
+  --panel-separator-color: #3D3D3D !important;
+  --panel-item-hover-bgcolor: #2E2E2E !important;
+  --panel-item-active-bgcolor: #3D3D3D !important;
+
+  --arrowpanel-background: #252525 !important;
+  --arrowpanel-color: #E1CE98 !important;
+  --arrowpanel-border-color: #3D3D3D !important;
+  --arrowpanel-dimmed: #2E2E2E !important;
+  --arrowpanel-dimmed-further: #3D3D3D !important;
+}
+
+/* rounded menu rows */
+#appMenu-popup .subviewbutton,
+#widget-overflow .subviewbutton,
+menupopup menuitem,
+menupopup menu {
+  border-radius: 7px !important;
+  margin-inline: 4px !important;
+}
+
+/* hover: solid row, no inset ring */
+#appMenu-popup .subviewbutton:not([disabled]):hover,
+#widget-overflow .subviewbutton:not([disabled]):hover,
+menupopup menuitem:not([disabled]):hover,
+menupopup menu:not([disabled]):hover,
+menupopup menuitem[_moz-menuactive="true"],
+menupopup menu[_moz-menuactive="true"] {
+  background-color: #2E2E2E !important;
+  color: #efebdc !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* separators */
+#appMenu-popup toolbarseparator,
+menupopup menuseparator {
+  border-top: 1px solid #3D3D3D !important;
+}
+
+/* ---------- hamburger / overflow / identity shells ----------
+   Context menus are NOT given an extra element border; native
+   --panel-border-color already draws one. */
+#appMenu-popup,
+#widget-overflow,
+#customizationui-widget-multiview,
+#protections-popup,
+#identity-popup {
+  border: 1px solid #3D3D3D !important;
+  border-radius: 10px !important;
+  background-color: #252525 !important;
+  padding: 0 !important;
+}
+
+#appMenu-popup panelmultiview,
+#appMenu-popup panelview,
+#appMenu-popup .panel-subview-body,
+#appMenu-multiView,
+#widget-overflow .panel-subview-body {
+  border-radius: 10px !important;
+  background-color: #252525 !important;
+}
