@@ -25,5 +25,35 @@
 
     --link-color: #a99b7a !important;
     --link-color-hover: #efebdc !important;
+
+    --focus-outline-color: #C0AF7F !important;
+    --focus-outline: 2px solid #C0AF7F !important;
+    --newtab-button-focus-border: #C0AF7F !important;
+    --button-background-color: #C0AF7F !important;
+    --button-text-color: #1B1B1B !important;
+  }
+
+  .top-site-outer:is(:focus, :focus-visible, .active) .tile,
+  .top-site-outer .top-site-button:focus .tile,
+  .top-site-outer .top-site-button:focus-visible .tile {
+    outline: 2px solid #C0AF7F !important;
+    border-color: #C0AF7F !important;
+  }
+
+  .personalize-button {
+    background-color: #C0AF7F !important;
+    color: #1B1B1B !important;
+  }
+
+  /* Hide shortcut artwork so tiles stay blank */
+  .top-site-icon,
+  .top-site-icon.rich-icon,
+  .top-site-icon.default-icon,
+  .screenshot,
+  .screenshot.active,
+  .letter-fallback {
+    background-image: none !important;
+    background-color: transparent !important;
+    opacity: 0 !important;
   }
 }
