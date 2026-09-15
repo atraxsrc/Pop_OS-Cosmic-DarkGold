@@ -58,14 +58,34 @@ menupopup {
   --panel-border-color: #3D3D3D !important;
   --panel-border-radius: 10px !important;
   --panel-separator-color: #3D3D3D !important;
-  --panel-item-hover-bgcolor: #2E2E2E !important;
-  --panel-item-active-bgcolor: #3D3D3D !important;
+  /* hover was #2E2E2E on #252525 — almost invisible */
+  --panel-item-hover-bgcolor: #3D382C !important;
+  --panel-item-active-bgcolor: #4A4334 !important;
 
   --arrowpanel-background: #252525 !important;
   --arrowpanel-color: #E1CE98 !important;
   --arrowpanel-border-color: #3D3D3D !important;
-  --arrowpanel-dimmed: #2E2E2E !important;
-  --arrowpanel-dimmed-further: #3D3D3D !important;
+  --arrowpanel-dimmed: #3D382C !important;
+  --arrowpanel-dimmed-further: #4A4334 !important;
+
+  /* newer Firefox panel vars (v140+) */
+  --panel-background-color: #252525 !important;
+  --panel-text-color: #E1CE98 !important;
+}
+
+/* Drop GTK/native menuitem chrome so background-color actually paints.
+   Without this, Cosmic/GTK hover is a 1-stop gray wash. */
+menupopup,
+menupopup menuitem,
+menupopup menu,
+menupopup menuseparator,
+#contentAreaContextMenu,
+#contentAreaContextMenu menuitem,
+#contentAreaContextMenu menu,
+#context-navigation,
+#context-navigation menuitem {
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
 /* rounded menu rows */
@@ -77,23 +97,42 @@ menupopup menu {
   margin-inline: 4px !important;
 }
 
-/* hover: solid row, no inset ring */
+/* hover / keyboard-active row
+   Gold-tinted fill + cream text + slim gold rail so the pointer
+   position is obvious without leaving Harbor Dark. */
 #appMenu-popup .subviewbutton:not([disabled]):hover,
 #widget-overflow .subviewbutton:not([disabled]):hover,
 menupopup menuitem:not([disabled]):hover,
 menupopup menu:not([disabled]):hover,
-menupopup menuitem[_moz-menuactive="true"],
-menupopup menu[_moz-menuactive="true"] {
-  background-color: #2E2E2E !important;
+menupopup menuitem[_moz-menuactive="true"]:not([disabled]),
+menupopup menu[_moz-menuactive="true"]:not([disabled]),
+#contentAreaContextMenu menuitem:not([disabled]):hover,
+#contentAreaContextMenu menu:not([disabled]):hover,
+#contentAreaContextMenu menuitem[_moz-menuactive="true"]:not([disabled]),
+#contentAreaContextMenu menu[_moz-menuactive="true"]:not([disabled]),
+#context-navigation menuitem:not([disabled]):hover,
+#context-navigation menuitem[_moz-menuactive="true"]:not([disabled]) {
+  background-color: #3D382C !important;
   color: #efebdc !important;
-  box-shadow: none !important;
+  box-shadow: inset 3px 0 0 #C0AF7F !important;
   outline: none !important;
+}
+
+/* access-key underline (the S in Save, A in As) — slightly brighter on hover */
+menupopup menuitem[_moz-menuactive="true"] .menu-text,
+menupopup menu[_moz-menuactive="true"] .menu-text,
+menupopup menuitem:hover .menu-text,
+menupopup menu:hover .menu-text {
+  color: #efebdc !important;
+  text-decoration-color: #C0AF7F !important;
 }
 
 /* separators */
 #appMenu-popup toolbarseparator,
 menupopup menuseparator {
   border-top: 1px solid #3D3D3D !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
 }
 
 /* ---------- hamburger / overflow / identity shells ----------
