@@ -2,7 +2,7 @@
 set -eo pipefail
 
 # ─────────────────────────────────────────────
-#  Harbor Dark / DarkGold
+#  Harbor Dark
 #  bg:      #1B1B1B   fg:      #efebdc
 #  accent:  #e75a50   brass:   #a99b7a
 #  gold:    #C0AF7F   salmon:  #e58980
@@ -10,8 +10,6 @@ set -eo pipefail
 #  dim:     #6d6d6d   cream:   #E1CE98
 # ─────────────────────────────────────────────
 
-# Harbor Dark — using $'...' so escape bytes are stored at assignment time
-# and work correctly with both echo -e and printf "%s"
 CYAN=$'\033[38;2;231;90;80m'      # #e75a50  – section headers
 BLUE=$'\033[38;2;169;155;122m'    # #a99b7a  – info / commands
 PURPLE=$'\033[38;2;192;175;127m'  # #C0AF7F  – highlights
@@ -41,15 +39,8 @@ command_exists() { command -v "$1" >/dev/null 2>&1; }
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 
-# Phased updates: Ubuntu staggers non-security updates so a bad one only hits a
-# fraction of machines first. Setting this to "true" opts out of that — you pull
-# every update immediately and become an early tester. Security updates are never
-# phased, so they always install regardless of this setting.
-#   true  = always pull phased updates now (early-adopter)
-#   false = honor the rollout, install when it reaches you (safer default)
 INCLUDE_PHASED=true
 
-# Built once and passed to apt/nala. Empty when INCLUDE_PHASED=false.
 PHASED_OPT=()
 if [ "$INCLUDE_PHASED" = true ]; then
     PHASED_OPT=(-o APT::Get::Always-Include-Phased-Updates=true)
@@ -125,12 +116,9 @@ update_snap() {
 
 # ── Logo ───────────────────────────────────────────────────────────────────────
 
-# DarkGold logo accents — global scope so $'...' escapes work correctly
-TEAL=$'\033[38;2;192;175;127m'   # #C0AF7F  gold
+TEAL=$'\033[38;2;231;90;80m'     # #e75a50  accent
 ORG=$'\033[38;2;169;155;122m'    # #a99b7a  brass
 
-# Banner rows, ANSI Shadow figlet font. All 46 columns wide; keep them that way
-# or the gradient below will drift out of alignment with the letterforms.
 LOGO_ROWS=(
     ' ██████╗ ██╗  ██╗██████╗ ███████╗██╗   ██╗ ██╗'
     '██╔═████╗╚██╗██╔╝██╔══██╗██╔════╝██║   ██║███║'
@@ -140,27 +128,19 @@ LOGO_ROWS=(
     ' ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝  ╚═══╝   ╚═╝'
 )
 
-# Per-column colours for the banner: brass → gold → cream.
-# Same 46 columns as the figlet rows.
+# brass #817f68 → parchment #E1CE98
 LOGO_GRAD=(
-    "169;155;122" "170;156;123" "171;157;123" "172;158;124" "173;159;124" "174;160;125"
-    "175;161;125" "176;162;126" "177;163;126" "178;164;127" "179;165;127" "180;166;128"
-    "181;167;128" "182;168;129" "183;169;129" "184;170;130" "185;171;130" "186;172;131"
-    "187;173;131" "188;174;132" "189;174;132" "190;175;133" "191;175;133" "192;175;127"
-    "194;177;129" "196;179;131" "198;181;133" "200;183;135" "202;185;137" "204;187;139"
-    "206;189;141" "208;191;143" "210;193;145" "212;195;146" "214;197;147" "216;199;148"
-    "218;201;149" "220;203;150" "222;205;151" "224;206;152" "226;210;160" "228;215;172"
-    "230;220;184" "233;225;196" "236;230;208" "239;235;220"
+    "129;127;104" "131;129;105" "133;131;106" "135;132;107" "138;134;108" "140;136;109"
+    "142;138;110" "144;139;111" "146;141;113" "148;143;114" "150;145;115" "152;146;116"
+    "155;148;117" "157;150;118" "159;152;119" "161;153;120" "163;155;121" "165;157;122"
+    "167;159;123" "170;160;124" "172;162;125" "174;164;126" "176;166;127" "178;167;129"
+    "180;169;130" "182;171;131" "184;173;132" "187;174;133" "189;176;134" "191;178;135"
+    "193;180;136" "195;181;137" "197;183;138" "199;185;139" "202;187;140" "204;188;141"
+    "206;190;142" "208;192;143" "210;194;145" "212;195;146" "214;197;147" "216;199;148"
+    "219;201;149" "221;202;150" "223;204;151" "225;206;152"
 )
 
-# Draw the banner one character at a time, colouring by column index so the
-# gradient runs horizontally across the whole word. Every glyph gets the ramp,
-# including the box-drawing bevel characters (╔ ═ ╗ ║ ╚ ╝) — colouring those
-# separately puts stray marks inside the 0, the D bowl and the e, which reads
-# as noise sitting on top of the letters rather than as depth.
 print_logo() {
-    # figlet rows are multibyte; force a UTF-8 locale so ${row:i:1} steps by
-    # character instead of by byte. Local to this function only.
     local LC_ALL=C.UTF-8
     local row ch out i
 
