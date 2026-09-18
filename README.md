@@ -48,9 +48,11 @@ Harbor Dark.
 ```
 .
 ├── cosmic
-│   └── DarkGold.ron             # COSMIC Appearance import
+│   ├── DarkGold.ron             # COSMIC Appearance import (Dark)
+│   └── DarkGold-Light.ron       # COSMIC Appearance import (Light)
 ├── cosmic-term
-│   └── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
+│   ├── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
+│   └── DarkGold-Light-term.ron  # COSMIC Terminal colour scheme (Harbor Light)
 ├── firefox
 │   ├── chrome
 │   │   ├── userChrome.css
@@ -101,6 +103,44 @@ If a profile is set as default, set the scheme on that profile too or the
 dropdown will look like it did nothing.
 
 Nala progress boxes use Rich `green`. In this scheme that slot is gold `#C0AF7F`.
+
+---
+
+## Light mode
+
+COSMIC keeps a separate theme for Dark and Light, so the light look needs its
+own import. Import both once and the Dark / Light toggle (or auto-switch)
+flips between them.
+
+**Desktop:** Settings → Desktop → Appearance → **Light** → **Import** →
+`cosmic/DarkGold-Light.ron`
+
+**Terminal:** View → Color schemes… → **Light** tab → **Import** →
+`cosmic-term/DarkGold-Light-term.ron`, then View → Settings → Appearance →
+Color scheme (light) → **Harbor Light**
+
+Same palette, flipped: a darker parchment window background with lighter
+cards on top so panels stand out, charcoal text, and deeper shades of the
+accents so they stay readable (all at least 4.5:1 contrast on the window
+background).
+
+| Role | Dark | Light |
+|------|------|-------|
+| Background | `#1B1B1B` | `#D9D1B8` |
+| Containers | `#2A2A29` / `#3C3C39` | `#EFEBDC` / `#F8F6EE` |
+| Text | `#EFEBDC` | `#1B1B1B` |
+| Accent (gold) | `#C0AF7F` | `#655628` |
+| Success (brass) | `#A99B7A` | `#5E5545` |
+| Salmon | `#E58980` | `#89433C` |
+| Coral | `#E75A50` | `#A23026` |
+| Error | `#F44336` | `#B01A1A` |
+| Slate | `#77838A` | `#4A545A` |
+
+Spacing, corners, gaps and frosted glass match the dark theme.
+
+Not covered yet: the harbordark Firefox add-on and `firefox/chrome/` are
+dark only, and `update_system.sh` uses light text colours that are hard to
+read on a light terminal.
 
 ---
 
@@ -175,6 +215,10 @@ cd Pop_OS-Cosmic-DarkGold
 
 # terminal
 # View → Color schemes → Import cosmic-term/DarkGold-term.ron
+
+# light mode (optional)
+# Appearance → Light → Import cosmic/DarkGold-Light.ron
+# Terminal → Color schemes → Light → Import cosmic-term/DarkGold-Light-term.ron
 
 # firefox add-on
 # https://addons.mozilla.org/en-US/firefox/addon/harbordark/
