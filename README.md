@@ -236,10 +236,10 @@ cd Pop_OS-Cosmic-DarkGold
 
 ## Switch back
 
-1. Appearance → Dark → Import `cosmic/Monochrome-Dark.ron` from the Monochrome
-   repo. Tokyo Night has no `.ron`; pick its colours by hand.
+1. Appearance → Dark → Import `cosmic/Monochrome-Dark.ron` (Monochrome repo)
+   or `cosmic/TokyoNight.ron` (Tokyo Night repo)
 2. Terminal → import Monochrome's `cosmic-term/Monochrome-Dark-term.ron`, or
-   pick your previous scheme for Tokyo Night
+   pick your previous scheme for Tokyo Night (no terminal file in that repo)
 3. Disable or replace the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on,
    then run the other repo's `firefox/install.sh`
 
