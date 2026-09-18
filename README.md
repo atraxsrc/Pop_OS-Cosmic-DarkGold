@@ -65,7 +65,6 @@ Harbor Dark.
 │   ├── cosmic_upscayl_2x_ultramix-balanced-4x.png
 │   ├── goldstarred_upscayl_2x_digital-art-4x.png
 │   └── harborSpace.jpg
-├── screenshots
 ├── LICENSE
 └── README.md
 ```
