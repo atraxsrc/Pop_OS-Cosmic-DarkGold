@@ -10,14 +10,13 @@ set -eo pipefail
 #  dim:     #6d6d6d   cream:   #E1CE98
 # ─────────────────────────────────────────────
 
-CYAN=$'\033[38;2;231;90;80m'      # #e75a50  – section headers
-BLUE=$'\033[38;2;169;155;122m'    # #a99b7a  – info / commands
-PURPLE=$'\033[38;2;192;175;127m'  # #C0AF7F  – highlights
-GREEN=$'\033[38;2;225;206;152m'   # #E1CE98  – success
-YELLOW=$'\033[38;2;192;175;127m'  # #C0AF7F  – warnings
-ORANGE=$'\033[38;2;129;127;104m'  # #817f68  – skipped
-RED=$'\033[38;2;244;67;54m'       # #F44336  – errors
-DIM=$'\033[38;2;109;109;109m'     # #6d6d6d  – comments / dim text
+CORAL=$'\033[38;2;231;90;80m'     # #e75a50  - section headers, logo rule
+BRASS=$'\033[38;2;169;155;122m'   # #a99b7a  - info / commands, logo rule
+CREAM=$'\033[38;2;225;206;152m'   # #E1CE98  - success
+GOLD=$'\033[38;2;192;175;127m'    # #C0AF7F  - warnings
+OLIVE=$'\033[38;2;129;127;104m'   # #817f68  - skipped
+RED=$'\033[38;2;244;67;54m'       # #F44336  - errors
+DIM=$'\033[38;2;109;109;109m'     # #6d6d6d  - comments / dim text
 BOLD=$'\033[1m'
 RESET=$'\033[0m'
 
@@ -25,13 +24,13 @@ RESET=$'\033[0m'
 
 print_header() {
     echo
-    echo -e "${CYAN}${BOLD}┌─ $1 ${DIM}──────────────────────────────────────${RESET}"
+    echo -e "${CORAL}${BOLD}┌─ $1 ${DIM}──────────────────────────────────────${RESET}"
 }
 
-print_success() { echo -e "  ${GREEN}✓ $1${RESET}"; }
-print_info()    { echo -e "  ${BLUE}→ $1${RESET}"; }
-print_warn()    { echo -e "  ${YELLOW}⚠ $1${RESET}"; }
-print_skip()    { echo -e "  ${ORANGE}⊘ $1${RESET}"; }
+print_success() { echo -e "  ${CREAM}✓ $1${RESET}"; }
+print_info()    { echo -e "  ${BRASS}→ $1${RESET}"; }
+print_warn()    { echo -e "  ${GOLD}⚠ $1${RESET}"; }
+print_skip()    { echo -e "  ${OLIVE}⊘ $1${RESET}"; }
 print_error()   { echo -e "  ${RED}✗ $1${RESET}"; }
 print_dim()     { echo -e "  ${DIM}$1${RESET}"; }
 
@@ -116,9 +115,6 @@ update_snap() {
 
 # ── Logo ───────────────────────────────────────────────────────────────────────
 
-TEAL=$'\033[38;2;231;90;80m'     # #e75a50  accent
-ORG=$'\033[38;2;169;155;122m'    # #a99b7a  brass
-
 LOGO_ROWS=(
     ' ██████╗ ██╗  ██╗██████╗ ███████╗██╗   ██╗ ██╗'
     '██╔═████╗╚██╗██╔╝██╔══██╗██╔════╝██║   ██║███║'
@@ -128,7 +124,7 @@ LOGO_ROWS=(
     ' ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝  ╚═══╝   ╚═╝'
 )
 
-# brass #817f68 → parchment #E1CE98
+# olive #817f68 → cream #E1CE98
 LOGO_GRAD=(
     "129;127;104" "131;129;105" "133;131;106" "135;132;107" "138;134;108" "140;136;109"
     "142;138;110" "144;139;111" "146;141;113" "148;143;114" "150;145;115" "152;146;116"
@@ -159,7 +155,7 @@ print_logo() {
     done
 
     echo
-    printf "  ${TEAL}━━━━━━━━━━━━━━━━━━━━━━━${ORG}━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
+    printf "  ${CORAL}━━━━━━━━━━━━━━━━━━━━━━━${BRASS}━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
     printf "  ${DIM}  Pop!_OS · COSMIC DE · System Update${RESET}\n"
     printf "  ${DIM}  %s${RESET}\n" "$(date '+%A %d %B %Y  %H:%M:%S')"
     echo
@@ -185,8 +181,8 @@ main() {
     duration=$((end_time - start_time))
 
     echo
-    echo -e "${CYAN}${BOLD}└─ All done ${DIM}──────────────────────────────────${RESET}"
-    printf "   ${GREEN}✓ Completed in ${BOLD}%dm %ds${RESET}\n" \
+    echo -e "${CORAL}${BOLD}└─ All done ${DIM}──────────────────────────────────${RESET}"
+    printf "   ${CREAM}✓ Completed in ${BOLD}%dm %ds${RESET}\n" \
         $((duration / 60)) $((duration % 60))
     echo
 }

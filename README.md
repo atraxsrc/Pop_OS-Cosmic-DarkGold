@@ -59,6 +59,10 @@ Harbor Dark.
 │   └── README.md
 ├── scripts
 │   └── update_system.sh         # nala + flatpak, Harbor Dark ANSI
+├── walls                        # wallpapers, see Wallpaper below
+│   ├── cosmic_upscayl_2x_ultramix-balanced-4x.png
+│   ├── goldstarred_upscayl_2x_digital-art-4x.png
+│   └── harborSpace.jpg
 ├── screenshots
 ├── LICENSE
 └── README.md
@@ -77,8 +81,9 @@ Settings → Desktop → Appearance → **Dark** → **Import** → `cosmic/Dark
 
 Accent is gold `#C0AF7F`. Use the `+` control if you want a custom swatch.
 
-Frosted glass is stored as `is_frosted: false`. Set it on Appearance → Style →
-Frosted glass after import; those sliders survive a theme switch.
+Frosted glass is on in the `.ron` at `frosted: VeryLow` for windows, panel,
+applets and system UI (maximized apps stay solid). Adjust it on Appearance →
+Style → Frosted glass after import; those sliders survive a theme switch.
 
 Export from Appearance if you tweak backgrounds / tints so you do not lose them.
 
@@ -101,12 +106,14 @@ Nala progress boxes use Rich `green`. In this scheme that slot is gold `#C0AF7F`
 
 ## Firefox
 
-Install the published theme:
+Two layers:
 
-**[harbordark on addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/harbordark/)**
-
-Optional extra chrome (rounded URL bar, menu hover) lives in `firefox/chrome/`
-if you still want the COSMIC-matching stylesheets:
+1. **Theme (colours):** install
+   **[harbordark on addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/harbordark/)**.
+   This is the main look.
+2. **Stylesheets (optional):** `firefox/chrome/` adds rounded corners, gold
+   menu hover, gold accents and blank new-tab tiles on top of the add-on
+   (they also work with Firefox's built-in Dark theme):
 
 ```bash
 chmod +x firefox/install.sh
@@ -114,6 +121,22 @@ chmod +x firefox/install.sh
 ```
 
 Fully quit Firefox afterward. Details: [`firefox/README.md`](firefox/README.md).
+
+---
+
+## Wallpaper
+
+Three wallpapers in `walls/`:
+
+| File | Size | Notes |
+|------|------|-------|
+| `cosmic_upscayl_2x_ultramix-balanced-4x.png` | 8000x4500, ~46 MB | Upscaled with Upscayl (ultramix-balanced) |
+| `goldstarred_upscayl_2x_digital-art-4x.png` | 7488x4224, ~7.5 MB | Upscaled with Upscayl (digital-art) |
+| `harborSpace.jpg` | 1872x1056, ~0.7 MB | Lightest option |
+
+Settings → Desktop → Wallpaper → **Add image** → pick a file.
+
+The big PNG makes the first clone slow.
 
 ---
 
@@ -132,7 +155,7 @@ Drop the icon pack into `~/.local/share/icons/` and pick it in COSMIC Settings
 ### `update_system.sh`
 
 Same updater as Monochrome / Tokyo Night. Headers are coral, success is cream,
-the figlet ramp is brass → gold → parchment.
+the figlet ramp is olive → gold → cream.
 
 ```bash
 chmod +x scripts/update_system.sh
@@ -158,6 +181,9 @@ cd Pop_OS-Cosmic-DarkGold
 
 # optional extra chrome
 # ./firefox/install.sh
+
+# wallpaper
+# Settings → Wallpaper → Add image → a file from walls/
 
 # icons
 # https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa

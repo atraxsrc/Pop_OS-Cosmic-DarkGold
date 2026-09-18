@@ -1,8 +1,12 @@
 /* ==========================================================================
    DarkGold / Harbor Dark - userContent.css
-   Based on Monochrome Dark + Cosmic Night v2 (variables only)
+   Based on Monochrome Dark + Cosmic Night v2
 
-   Color only. No size / position changes.
+   New tab / home / private pages only:
+     - gold accent, focus and link colours
+     - gold focus ring on shortcut tiles, gold personalize button
+     - shortcut artwork hidden (tiles stay, icons go blank)
+   No size / position changes.
 
    Install:  chrome/userContent.css   (same pref + restart as userChrome.css)
    ========================================================================== */
