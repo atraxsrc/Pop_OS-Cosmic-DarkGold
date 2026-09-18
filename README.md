@@ -29,17 +29,17 @@ Harbor Dark.
 
 | Role | Color | Hex |
 |------|-------|-----|
-| Background | Charcoal | `#1B1B1B` |
-| Foreground | Parchment | `#efebdc` |
-| Cream | Bone | `#E1CE98` |
-| Gold | Accent | `#C0AF7F` |
-| Brass | Secondary | `#a99b7a` |
-| Salmon | Cool accent | `#e58980` |
-| Coral | Headers | `#e75a50` |
-| Error | Red | `#F44336` |
-| Slate | Muted metal | `#77838a` |
-| Dim | Comments | `#6d6d6d` |
-| Olive | Bright-black | `#817f68` |
+| Background | ![#1b1b1b](https://placehold.co/12x12/1b1b1b/1b1b1b.png) Charcoal | `#1B1B1B` |
+| Foreground | ![#efebdc](https://placehold.co/12x12/efebdc/efebdc.png) Parchment | `#efebdc` |
+| Cream | ![#e1ce98](https://placehold.co/12x12/e1ce98/e1ce98.png) Bone | `#E1CE98` |
+| Gold | ![#c0af7f](https://placehold.co/12x12/c0af7f/c0af7f.png) Accent | `#C0AF7F` |
+| Brass | ![#a99b7a](https://placehold.co/12x12/a99b7a/a99b7a.png) Secondary | `#a99b7a` |
+| Salmon | ![#e58980](https://placehold.co/12x12/e58980/e58980.png) Cool accent | `#e58980` |
+| Coral | ![#e75a50](https://placehold.co/12x12/e75a50/e75a50.png) Headers | `#e75a50` |
+| Error | ![#f44336](https://placehold.co/12x12/f44336/f44336.png) Red | `#F44336` |
+| Slate | ![#77838a](https://placehold.co/12x12/77838a/77838a.png) Muted metal | `#77838a` |
+| Dim | ![#6d6d6d](https://placehold.co/12x12/6d6d6d/6d6d6d.png) Comments | `#6d6d6d` |
+| Olive | ![#817f68](https://placehold.co/12x12/817f68/817f68.png) Bright-black | `#817f68` |
 
 ---
 
