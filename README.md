@@ -61,10 +61,6 @@ Harbor Dark.
 │   └── README.md
 ├── scripts
 │   └── update_system.sh         # nala + flatpak, Harbor Dark ANSI
-├── walls                        # wallpapers, see Wallpaper below
-│   ├── cosmic_upscayl_2x_ultramix-balanced-4x.png
-│   ├── goldstarred_upscayl_2x_digital-art-4x.png
-│   └── harborSpace.jpg
 ├── LICENSE
 └── README.md
 ```
@@ -165,17 +161,20 @@ Fully quit Firefox afterward. Details: [`firefox/README.md`](firefox/README.md).
 
 ## Wallpaper
 
-Three wallpapers in `walls/`:
+Wallpapers live in [cool-wallpapers](https://github.com/atraxsrc/cool-wallpapers),
+so this repo stays small. The ones used with this rice:
 
 | File | Size | Notes |
 |------|------|-------|
-| `cosmic_upscayl_2x_ultramix-balanced-4x.png` | 8000x4500, ~46 MB | Upscaled with Upscayl (ultramix-balanced) |
-| `goldstarred_upscayl_2x_digital-art-4x.png` | 7488x4224, ~7.5 MB | Upscaled with Upscayl (digital-art) |
-| `harborSpace.jpg` | 1872x1056, ~0.7 MB | Lightest option |
+| [`cosmic/cosmic-astronaut-black-8000x4500.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/cosmic-astronaut-black-8000x4500.png) | 8000x4500, ~46 MB | Upscaled with Upscayl (ultramix-balanced) |
+| [`cosmic/cosmic-astronaut-black-starred-7488x4224.png`](https://github.com/atraxsrc/cool-wallpapers/blob/main/cosmic/cosmic-astronaut-black-starred-7488x4224.png) | 7488x4224, ~7.5 MB | Upscaled with Upscayl (digital-art) |
+| [`harbor-dark/harbor-space-1872x1056.jpg`](https://github.com/atraxsrc/cool-wallpapers/blob/main/harbor-dark/harbor-space-1872x1056.jpg) | 1872x1056, ~0.7 MB | Lightest option |
 
-Settings → Desktop → Wallpaper → **Add image** → pick a file.
+More Harbor Dark and gold astronaut variants are in
+[`cosmic/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/cosmic) and
+[`harbor-dark/`](https://github.com/atraxsrc/cool-wallpapers/tree/main/harbor-dark).
 
-The big PNG makes the first clone slow.
+Download one, then Settings → Desktop → Wallpaper → **Add image** → pick the file.
 
 ---
 
@@ -226,7 +225,8 @@ cd Pop_OS-Cosmic-DarkGold
 # ./firefox/install.sh
 
 # wallpaper
-# Settings → Wallpaper → Add image → a file from walls/
+# Settings → Wallpaper → Add image → a file from
+# https://github.com/atraxsrc/cool-wallpapers (see Wallpaper above)
 
 # icons
 # https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa
