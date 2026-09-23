@@ -21,7 +21,7 @@ Firefox uses the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/har
 Icons: [Kanagawa](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa).
 
 ---
-<img width="3837" height="2160" alt="git" src="https://github.com/user-attachments/assets/4429f960-fe93-465e-9c5f-47eaa54d78af" />
+![Pop!_OS COSMIC desktop with the DarkGold theme](assets/screenshot.png)
 
 ## Palette
 
@@ -47,12 +47,20 @@ Harbor Dark.
 
 ```
 .
+├── assets
+│   └── screenshot.png           # README screenshot
+├── btop
+│   └── DarkGold.theme           # btop colour theme
 ├── cosmic
 │   ├── DarkGold.ron             # COSMIC Appearance import (Dark)
 │   └── DarkGold-Light.ron       # COSMIC Appearance import (Light)
 ├── cosmic-term
 │   ├── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
 │   └── DarkGold-Light-term.ron  # COSMIC Terminal colour scheme (Harbor Light)
+├── fastfetch
+│   ├── config.jsonc             # Harbor Dark fastfetch config
+│   ├── cosmic.txt               # COSMIC logo
+│   └── install.sh
 ├── firefox
 │   ├── chrome
 │   │   ├── userChrome.css
@@ -65,7 +73,7 @@ Harbor Dark.
 └── README.md
 ```
 
-Dotfiles and fastfetch stay in the Tokyo Night repo.
+Shell dotfiles stay in the Tokyo Night repo.
 
 Built from the Monochrome repo layout:
 https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome
@@ -188,6 +196,34 @@ Drop the icon pack into `~/.local/share/icons/` and pick it in COSMIC Settings
 
 ---
 
+## Terminal extras
+
+Both need a [Nerd Font](https://www.nerdfonts.com/) in the terminal for the icons
+(the screenshot uses Maple Mono NFM).
+
+### fastfetch
+
+`fastfetch/` holds a Harbor Dark config with a COSMIC logo in coral and
+Hardware / Software / Age boxes. `install.sh` backs up any existing
+`~/.config/fastfetch/config.jsonc` to `config.jsonc.bak` before copying.
+
+```bash
+./fastfetch/install.sh
+fastfetch
+```
+
+### btop
+
+`btop/DarkGold.theme` uses the same palette: charcoal background, coral highlights, brass titles.
+
+```bash
+mkdir -p ~/.config/btop/themes
+cp btop/DarkGold.theme ~/.config/btop/themes/
+# btop → Esc → Options → Color theme → DarkGold
+```
+
+---
+
 ## Scripts
 
 ### `update_system.sh`
@@ -224,6 +260,10 @@ cd Pop_OS-Cosmic-DarkGold
 # optional extra chrome
 # ./firefox/install.sh
 
+# fastfetch + btop (see Terminal extras above)
+./fastfetch/install.sh
+mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
+
 # wallpaper
 # Settings → Wallpaper → Add image → a file from
 # https://github.com/atraxsrc/cool-wallpapers (see Wallpaper above)
@@ -253,6 +293,8 @@ cd Pop_OS-Cosmic-DarkGold
 | [COSMIC DE](https://system76.com/cosmic) | Desktop environment |
 | [omarchy-harbordark-theme](https://github.com/HANCORE-linux/omarchy-harbordark-theme) | Palette inspiration |
 | [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) | Firefox theme |
+| [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info |
+| [btop](https://github.com/aristocratos/btop) | Resource monitor |
 | [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) | Icon pack |
 | [Pop_OS-Cosmic-Monochrome](https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome) | Layout source |
 | This repo | Harbor Dark / DarkGold on COSMIC |
