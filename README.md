@@ -21,8 +21,8 @@ Firefox uses the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/har
 Icons: [Kanagawa](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa).
 
 ---
-<img width="3840" height="2157" alt="new" src="https://github.com/user-attachments/assets/67052d19-e660-4e79-b861-5f499375bbf0" />
-<img width="3677" height="2112" alt="gitpic" src="https://github.com/user-attachments/assets/707dda87-1ce2-42b6-af88-40b33c98f3c1" />
+<img width="3837" height="2160" alt="git" src="https://github.com/user-attachments/assets/c9d5e532-db0d-4cf6-8761-ef3e25fde2b5" />
+
 
 ## Palette
 
