@@ -1,101 +1,153 @@
 #!/usr/bin/env bash
-# Install Oxygen cursor themes system-wide and make them work in COSMIC.
-# Every variant given is installed; the FIRST one becomes the active cursor.
+# Install Oxygen cursor variants from this repo and make the first one active.
 #
-#   ./cursors/install.sh                     # Vibrant Red (active) + Royal Yellow
-#   ./cursors/install.sh Oxygen-37-Royal-Yellow Oxygen-05-Vibrant-Red   # yellow active
-#   ./cursors/install.sh Oxygen-10-Blue      # any single variant
-#   ./cursors/install.sh --list              # show all 37 variants
+#   ./cursors/install.sh Oxygen-28-Coastal-Beige              # install + activate
+#   ./cursors/install.sh Oxygen-28-Coastal-Beige Oxygen-05-Vibrant-Red
+#                                                             # first is active, rest just installed
+#   ./cursors/install.sh --user Oxygen-28-Coastal-Beige       # themes to ~/.local/share/icons
+#   ./cursors/install.sh --size 32 Oxygen-28-Coastal-Beige    # cursor size (default 24)
+#   ./cursors/install.sh --list                               # variants by palette tier
 #
-# Why the extra steps: COSMIC has no cursor picker yet, so the theme is set with
-# XCURSOR_THEME. Oxygen (2022) only ships old X11 cursor names (left_ptr, ...).
-# COSMIC apps ask the compositor for modern names (default, ew-resize, ...), and
-# anything missing falls back to the black system cursor. This script adds the
-# modern names as symlinks to the matching Oxygen cursors.
+# COSMIC has no cursor picker yet, so the active theme is set with XCURSOR_THEME
+# in /etc/environment, which cosmic-comp reads at login. The variants in this
+# repo already carry the modern cursor names COSMIC apps ask for (default,
+# ew-resize, ...) as symlinks; see cursors/README.md.
 #
-# Backs up the config files it changes. Safe to run again.
+# Backs up every config file it changes (.bak-<timestamp>). Safe to run again.
 set -euo pipefail
 
-REPO="https://github.com/wo2ni/Oxygen-Cursors.git"
-COMMIT="d3a867e45eb8d160cb9311e8f181ac2e25ac37eb"   # pinned upstream commit
-DEFAULTS=(Oxygen-05-Vibrant-Red Oxygen-37-Royal-Yellow)
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TIERS="$HERE/tiers.tsv"
 SIZE="${XCURSOR_SIZE_OVERRIDE:-24}"
 DEST="/usr/share/icons"
+USER_MODE=false
 STAMP="$(date +%Y%m%d-%H%M%S)"
 
-if [[ $# -gt 0 ]]; then VARIANTS=("$@"); else VARIANTS=("${DEFAULTS[@]}"); fi
-ACTIVE="${VARIANTS[0]}"
+usage() {
+  sed -n '2,10s/^# \{0,1\}//p' "${BASH_SOURCE[0]}"
+}
 
-command -v git >/dev/null || { echo "git is required: sudo apt install git"; exit 1; }
+list_variants() {
+  local active tier title v t mark
+  active="$(sed -n 's/^XCURSOR_THEME=//p' /etc/environment 2>/dev/null | tail -n1)"
+  for tier in best accent neutral; do
+    case "$tier" in
+      best)    title="Best match (Gold / Cream / Brass / Parchment)" ;;
+      accent)  title="Accent match (Coral / Salmon / Red)" ;;
+      neutral) title="Neutral (greys, whites, blacks)" ;;
+    esac
+    echo "$title"
+    while IFS=$'\t' read -r v t; do
+      [[ "$v" == \#* || "$t" != "$tier" ]] && continue
+      mark=" "
+      if [[ -d "$DEST/$v" || -d "$HOME/.local/share/icons/$v" ]]; then mark="*"; fi
+      if [[ "$v" == "$active" ]]; then mark=">"; fi
+      echo "  $mark $v"
+    done < "$TIERS"
+    echo
+  done
+  echo "* installed   > active"
+}
 
-TMP="$(mktemp -d)"
-trap 'rm -rf "$TMP"' EXIT
+# run as root for system paths, as the user for --user
+as_dest() {
+  if $USER_MODE; then "$@"; else sudo "$@"; fi
+}
 
-echo "Fetching Oxygen-Cursors..."
-git clone -q "$REPO" "$TMP/oxygen"
-git -C "$TMP/oxygen" checkout -q "$COMMIT"
+VARIANTS=()
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --list)    list_variants; exit 0 ;;
+    --user)    USER_MODE=true; DEST="$HOME/.local/share/icons" ;;
+    --size)    SIZE="${2:-}"; shift ;;
+    --size=*)  SIZE="${1#--size=}" ;;
+    -h|--help) usage; exit 0 ;;
+    -*)        echo "Unknown option: $1"; usage; exit 1 ;;
+    *)         VARIANTS+=("$1") ;;
+  esac
+  shift
+done
 
-if [[ "$ACTIVE" == "--list" ]]; then
-  find "$TMP/oxygen" -maxdepth 1 -type d -name 'Oxygen-*' -printf '%f\n' | sort
-  exit 0
+if [[ ${#VARIANTS[@]} -eq 0 ]]; then
+  usage
+  echo
+  echo "Name at least one variant. See: $0 --list"
+  exit 1
 fi
+[[ "$SIZE" =~ ^[0-9]+$ ]] || { echo "Size must be a number, got '$SIZE'"; exit 1; }
 
 # check every name before touching anything
 for v in "${VARIANTS[@]}"; do
-  [[ "$v" == Oxygen-* && -d "$TMP/oxygen/$v/cursors" ]] || {
-    echo "No variant called '$v'. Try: $0 --list"; exit 1; }
+  if [[ ! "$v" =~ ^Oxygen-[0-9]{2}-[A-Za-z-]+$ || ! -f "$HERE/$v/index.theme" || ! -d "$HERE/$v/cursors" ]]; then
+    echo "No variant called '$v'. Try: $0 --list"
+    exit 1
+  fi
 done
+ACTIVE="${VARIANTS[0]}"
 
-# modern name -> existing Oxygen cursor
-LINKS="default:left_ptr context-menu:left_ptr crosshair:cross cell:plus
-vertical-text:xterm grab:openhand grabbing:closedhand no-drop:dnd-no-drop
-zoom-in:plus zoom-out:plus ew-resize:size_hor ns-resize:size_ver
-ne-resize:size_bdiag sw-resize:size_bdiag nesw-resize:size_bdiag
-nw-resize:size_fdiag se-resize:size_fdiag nwse-resize:size_fdiag"
-
+# 1. copy each variant --------------------------------------------------------
+if $USER_MODE; then echo "Installing to $DEST"; else echo "Installing to $DEST (needs sudo)"; fi
+as_dest mkdir -p "$DEST"
 for v in "${VARIANTS[@]}"; do
-  SRC="$TMP/oxygen/$v"
-
-  # 1. add modern cursor names
-  for pair in $LINKS; do
-    name="${pair%%:*}" target="${pair##*:}"
-    if [[ ! -e "$SRC/cursors/$name" && ! -L "$SRC/cursors/$name" ]]; then
-      ln -s "$target" "$SRC/cursors/$name"
-    fi
-  done
-
-  # 2. install system-wide (rebuilt from the pinned commit, so an older copy is replaced)
-  echo "Installing $v to $DEST (needs sudo)..."
-  if [[ -d "$DEST/$v" ]]; then sudo rm -rf -- "${DEST:?}/$v"; fi
-  sudo cp -r "$SRC" "$DEST/"
-  sudo chmod -R a+rX "$DEST/$v"
+  if [[ -d "$DEST/$v" ]] && diff -r --no-dereference -q "$HERE/$v" "$DEST/$v" >/dev/null 2>&1; then
+    echo "  $v already up to date"
+    continue
+  fi
+  # build next to the target, then swap, so a failed copy never leaves half a theme
+  tmp="$DEST/.$v.new-$$"
+  as_dest rm -rf -- "$tmp"
+  as_dest mkdir -p "$tmp"
+  as_dest cp -R -P "$HERE/$v/." "$tmp/"
+  as_dest chmod -R a+rX "$tmp"
+  if [[ -d "$DEST/$v" ]]; then
+    # an older copy that differs: keep it out of the theme list, but keep it
+    as_dest mv -- "$DEST/$v" "$DEST/.$v.bak-$STAMP"
+    echo "  older $v moved to $DEST/.$v.bak-$STAMP"
+  fi
+  as_dest mv -- "$tmp" "$DEST/$v"
+  echo "  installed $v"
 done
 
-# 3. tell the session (and cosmic-comp) which theme to use ------------------
-echo "Setting XCURSOR_THEME=$ACTIVE in /etc/environment..."
-sudo cp /etc/environment "/etc/environment.bak-$STAMP"
-sudo sed -i '/^XCURSOR_THEME=/d;/^XCURSOR_SIZE=/d' /etc/environment
-printf 'XCURSOR_THEME=%s\nXCURSOR_SIZE=%s\n' "$ACTIVE" "$SIZE" | sudo tee -a /etc/environment >/dev/null
-
-# 4. fallback for X11 / XWayland apps ---------------------------------------
-mkdir -p "$HOME/.icons/default"
-if [[ -f "$HOME/.icons/default/index.theme" ]]; then
-  cp "$HOME/.icons/default/index.theme" "$HOME/.icons/default/index.theme.bak-$STAMP"
+# 2. cosmic-comp reads XCURSOR_* from /etc/environment at login ---------------
+want="$(printf 'XCURSOR_THEME=%s\nXCURSOR_SIZE=%s' "$ACTIVE" "$SIZE")"
+have="$(grep -E '^XCURSOR_(THEME|SIZE)=' /etc/environment 2>/dev/null || true)"
+if [[ "$have" == "$want" ]]; then
+  echo "/etc/environment already set to $ACTIVE, size $SIZE"
+else
+  echo "Setting XCURSOR_THEME=$ACTIVE XCURSOR_SIZE=$SIZE in /etc/environment (needs sudo)"
+  sudo cp -p /etc/environment "/etc/environment.bak-$STAMP"
+  sudo sed -i '/^XCURSOR_THEME=/d;/^XCURSOR_SIZE=/d' /etc/environment
+  printf '%s\n' "$want" | sudo tee -a /etc/environment >/dev/null
+  echo "  backup: /etc/environment.bak-$STAMP"
 fi
-printf '[Icon Theme]\nInherits=%s\n' "$ACTIVE" > "$HOME/.icons/default/index.theme"
 
-# 5. GTK apps ---------------------------------------------------------------
+# 3. X11 / XWayland apps -----------------------------------------------------
+idx="$HOME/.icons/default/index.theme"
+new_idx="$(printf '[Icon Theme]\nInherits=%s' "$ACTIVE")"
+if [[ -f "$idx" && "$(cat "$idx")" == "$new_idx" ]]; then
+  echo "$idx already inherits $ACTIVE"
+else
+  mkdir -p "$(dirname "$idx")"
+  if [[ -f "$idx" ]]; then
+    cp -p "$idx" "$idx.bak-$STAMP"
+    echo "  backup: $idx.bak-$STAMP"
+  fi
+  printf '%s\n' "$new_idx" > "$idx"
+  echo "Wrote $idx"
+fi
+
+# 4. GTK apps ----------------------------------------------------------------
 if command -v gsettings >/dev/null; then
   gsettings set org.gnome.desktop.interface cursor-theme "$ACTIVE" 2>/dev/null || true
   gsettings set org.gnome.desktop.interface cursor-size "$SIZE" 2>/dev/null || true
 fi
 
-# 6. Flatpak apps -----------------------------------------------------------
+# 5. Flatpak apps don't see /etc/environment ---------------------------------
 if command -v flatpak >/dev/null; then
-  flatpak override --user --env=XCURSOR_THEME="$ACTIVE" --env=XCURSOR_SIZE="$SIZE"
+  flatpak override --user --env=XCURSOR_THEME="$ACTIVE" --env=XCURSOR_SIZE="$SIZE" || true
 fi
 
 echo
 echo "Installed: ${VARIANTS[*]}"
-echo "Active:    $ACTIVE"
-echo "Reboot (or log out and back in) so cosmic-comp picks it up."
+echo "Active:    $ACTIVE (size $SIZE)"
+echo "Reboot (or log out and back in): cosmic-comp only reads the cursor at startup."
