@@ -19,7 +19,7 @@ Inspired by [omarchy-harbordark-theme](https://github.com/HANCORE-linux/omarchy-
 Keep the Monochrome / Tokyo Night repos. Import this `.ron` when you want the gold look.
 Firefox uses the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on.
 Icons: [Kanagawa](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa).
-Cursor: [Oxygen](https://github.com/wo2ni/Oxygen-Cursors), 24 palette-matched variants (Coastal Beige or Vibrant Red to start).
+Cursor: [Oxygen](https://github.com/wo2ni/Oxygen-Cursors) Vibrant Red, COSMIC-fixed.
 
 ---
 ![Pop!_OS COSMIC desktop with the DarkGold theme](assets/screenshot.png)
@@ -49,7 +49,7 @@ Harbor Dark.
 ```
 .
 ├── assets
-│   ├── cursors/                 # cursor swatches for cursors/README.md
+│   ├── cursors/                 # cursor swatch for cursors/README.md
 │   └── screenshot.png           # README screenshot
 ├── btop
 │   └── DarkGold.theme           # btop colour theme
@@ -59,9 +59,7 @@ Harbor Dark.
 ├── cosmic-term
 │   ├── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
 │   └── DarkGold-Light-term.ron  # COSMIC Terminal colour scheme (Harbor Light)
-├── cursors/                     # 24 Oxygen variants, COSMIC-fixed
-│   ├── tools/palette_match.py   # measures each variant against the palette
-│   ├── tiers.tsv                # best / accent / neutral
+├── cursors/                     # Oxygen-05-Vibrant-Red, COSMIC-fixed
 │   ├── install.sh
 │   ├── uninstall.sh
 │   └── README.md
@@ -206,29 +204,20 @@ Drop the icon pack into `~/.local/share/icons/` and pick it in COSMIC Settings
 
 ## Cursor
 
-[Oxygen cursors](https://github.com/wo2ni/Oxygen-Cursors) (original KDE Oxygen
-designs), 24 variants kept in `cursors/`, sorted by measured distance to the palette.
-Top picks:
+**Oxygen-05-Vibrant-Red** (red `#E41414`, goes with Coral / Error) from the
+[Oxygen cursors](https://github.com/wo2ni/Oxygen-Cursors) (original KDE Oxygen designs),
+kept in `cursors/`.
 
-| Variant | Colour | Goes with |
-| ------- | ------ | --------- |
-| **Oxygen-28-Coastal-Beige** | beige `#DED3C1` | Parchment / Cream |
-| **Oxygen-05-Vibrant-Red** | red `#E41414` | Coral / Error |
-| Oxygen-15-Brown | brass `#AF9161` | Brass / Gold |
-| Oxygen-20-Peach-Fruit | cream + coral `#EFD9B6` | Cream, coral outline |
-
-COSMIC has no cursor picker yet, so a script sets it. The first name is the
-active cursor, any others are just installed:
+COSMIC has no cursor picker yet, so a script sets it:
 
 ```bash
-./cursors/install.sh --list                     # all variants by tier
-./cursors/install.sh Oxygen-28-Coastal-Beige    # install + activate
+./cursors/install.sh
 reboot
 ```
 
-Every variant is already patched for the one real gotcha: Oxygen only has old
-X11 cursor names, so without the fix the cursor is right in Firefox but **black
-in COSMIC's own apps**. Tiers, swatches, switching, uninstall and the fix itself:
+The theme is already patched for the one real gotcha: Oxygen only has old X11
+cursor names, so without the fix the cursor is right in Firefox but **black in
+COSMIC's own apps**. Options, uninstall and the fix itself:
 [`cursors/README.md`](cursors/README.md).
 
 ---
@@ -308,8 +297,8 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 # icons
 # https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa
 
-# cursor (then reboot), see cursors/README.md for the other variants
-./cursors/install.sh Oxygen-28-Coastal-Beige
+# cursor (then reboot), see cursors/README.md
+./cursors/install.sh
 ```
 
 ---
@@ -322,8 +311,7 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
    pick your previous scheme for Tokyo Night (no terminal file in that repo)
 3. Disable or replace the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on,
    then run the other repo's `firefox/install.sh`
-4. Cursor: `./cursors/uninstall.sh` (back to the Pop default), or switch with
-   `./cursors/install.sh <variant>`; then reboot
+4. Cursor: `./cursors/uninstall.sh` (back to the Pop default), then reboot
 
 ---
 
@@ -338,7 +326,7 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 | [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info |
 | [btop](https://github.com/aristocratos/btop) | Resource monitor |
 | [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) | Icon pack |
-| [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor themes (KDE Oxygen designs), COSMIC-fixed |
+| [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor theme (KDE Oxygen designs), COSMIC-fixed |
 | [Pop_OS-Cosmic-Monochrome](https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome) | Layout source |
 | This repo | Harbor Dark / DarkGold on COSMIC |
 

@@ -1,48 +1,33 @@
 #!/usr/bin/env bash
 # Undo cursors/install.sh.
 #
-#   ./cursors/uninstall.sh                           # remove every Oxygen-* theme
-#   ./cursors/uninstall.sh Oxygen-05-Vibrant-Red     # remove only these variants
+#   ./cursors/uninstall.sh
 #
-# Looks in /usr/share/icons and ~/.local/share/icons and only touches Oxygen-*
-# themes there. Cursor settings are reset only when the active cursor is one
-# of the themes being removed, which puts you back on the Pop!_OS default.
-# Config files get a .bak-<timestamp> copy before they change.
+# Removes Oxygen-05-Vibrant-Red from /usr/share/icons and ~/.local/share/icons.
+# Cursor settings are reset only when it is the active cursor, which puts you
+# back on the Pop!_OS default. Config files get a .bak-<timestamp> copy first.
 set -euo pipefail
 
+THEME="Oxygen-05-Vibrant-Red"
 SYS="/usr/share/icons"
 USR="$HOME/.local/share/icons"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 ACTIVE="$(sed -n 's/^XCURSOR_THEME=//p' /etc/environment 2>/dev/null | tail -n1)"
 
-if [[ $# -gt 0 ]]; then
-  VARIANTS=("$@")
-  for v in "${VARIANTS[@]}"; do
-    [[ "$v" =~ ^Oxygen-[0-9]{2}-[A-Za-z-]+$ ]] || { echo "'$v' is not an Oxygen variant name."; exit 1; }
-  done
-else
-  mapfile -t VARIANTS < <(find "$SYS" "$USR" -maxdepth 1 -type d -name 'Oxygen-*' -printf '%f\n' 2>/dev/null | sort -u)
+found=false
+if [[ -d "$SYS/$THEME" ]]; then
+  echo "Removing $SYS/$THEME (needs sudo)"
+  sudo rm -rf -- "${SYS:?}/$THEME"
+  found=true
 fi
-[[ ${#VARIANTS[@]} -gt 0 ]] || { echo "No Oxygen themes installed."; exit 0; }
+if [[ -d "$USR/$THEME" ]]; then
+  echo "Removing $USR/$THEME"
+  rm -rf -- "${USR:?}/$THEME"
+  found=true
+fi
+$found || echo "$THEME is not installed"
 
-reset_settings=false
-for v in "${VARIANTS[@]}"; do
-  found=false
-  if [[ -d "$SYS/$v" ]]; then
-    echo "Removing $SYS/$v (needs sudo)"
-    sudo rm -rf -- "${SYS:?}/$v"
-    found=true
-  fi
-  if [[ -d "$USR/$v" ]]; then
-    echo "Removing $USR/$v"
-    rm -rf -- "${USR:?}/$v"
-    found=true
-  fi
-  $found || echo "$v is not installed"
-  if [[ "$v" == "$ACTIVE" ]]; then reset_settings=true; fi
-done
-
-if ! $reset_settings; then
+if [[ "$ACTIVE" != "$THEME" ]]; then
   echo "Done. Active cursor (${ACTIVE:-none}) left as is."
   exit 0
 fi
