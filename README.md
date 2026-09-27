@@ -19,6 +19,7 @@ Inspired by [omarchy-harbordark-theme](https://github.com/HANCORE-linux/omarchy-
 Keep the Monochrome / Tokyo Night repos. Import this `.ron` when you want the gold look.
 Firefox uses the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on.
 Icons: [Kanagawa](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa).
+Cursor: [Oxygen](https://github.com/wo2ni/Oxygen-Cursors) Vibrant Red or Royal Yellow.
 
 ---
 ![Pop!_OS COSMIC desktop with the DarkGold theme](assets/screenshot.png)
@@ -57,6 +58,10 @@ Harbor Dark.
 ├── cosmic-term
 │   ├── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
 │   └── DarkGold-Light-term.ron  # COSMIC Terminal colour scheme (Harbor Light)
+├── cursors
+│   ├── install.sh               # Oxygen Red + Royal Yellow, COSMIC fix (fetched upstream)
+│   ├── uninstall.sh
+│   └── README.md
 ├── fastfetch
 │   ├── config.jsonc             # Harbor Dark fastfetch config
 │   ├── cosmic.txt               # COSMIC logo
@@ -196,6 +201,34 @@ Drop the icon pack into `~/.local/share/icons/` and pick it in COSMIC Settings
 
 ---
 
+## Cursor
+
+[Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors), two variants:
+
+| Variant | Colour | Goes with |
+| ------- | ------ | --------- |
+| **Oxygen-05-Vibrant-Red** (default) | red | Coral / Error accents |
+| **Oxygen-37-Royal-Yellow** | yellow | Gold / Cream accents |
+
+COSMIC has no cursor picker yet, so a script does it. It installs both; the
+first name you give is the active one:
+
+```bash
+./cursors/install.sh                                                # red
+./cursors/install.sh Oxygen-37-Royal-Yellow Oxygen-05-Vibrant-Red   # yellow
+reboot
+```
+
+It fetches the themes, installs them to `/usr/share/icons`, sets `XCURSOR_THEME`
+in `/etc/environment`, and covers GTK, XWayland and Flatpak apps.
+
+It also fixes the one real gotcha: Oxygen only ships old X11 cursor names, so
+the cursor ends up right in Firefox but **black in COSMIC's own apps**. The script
+adds the modern names (`default`, `ew-resize`, …) as symlinks. Details and
+uninstall: [`cursors/README.md`](cursors/README.md).
+
+---
+
 ## Terminal extras
 
 Both need a [Nerd Font](https://www.nerdfonts.com/) in the terminal for the icons
@@ -270,6 +303,9 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 
 # icons
 # https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa
+
+# cursor: Vibrant Red + Royal Yellow (then reboot)
+./cursors/install.sh
 ```
 
 ---
@@ -282,6 +318,7 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
    pick your previous scheme for Tokyo Night (no terminal file in that repo)
 3. Disable or replace the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on,
    then run the other repo's `firefox/install.sh`
+4. Cursor: `./cursors/uninstall.sh`, or keep it; it is not tied to the gold palette
 
 ---
 
@@ -296,6 +333,7 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 | [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info |
 | [btop](https://github.com/aristocratos/btop) | Resource monitor |
 | [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) | Icon pack |
+| [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor theme |
 | [Pop_OS-Cosmic-Monochrome](https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome) | Layout source |
 | This repo | Harbor Dark / DarkGold on COSMIC |
 
