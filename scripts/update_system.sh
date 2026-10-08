@@ -71,7 +71,7 @@ update_system() {
         print_success "APT system update complete"
 
     else
-        print_error "No supported package manager found — skipping"
+        print_error "No supported package manager found - skipping"
         return 1
     fi
 }
@@ -79,7 +79,7 @@ update_system() {
 update_flatpak() {
     print_header "Flatpak"
     if ! command_exists flatpak; then
-        print_skip "Flatpak not installed — skipping"
+        print_skip "Flatpak not installed - skipping"
         return 0
     fi
 
@@ -95,7 +95,7 @@ update_snap() {
     print_header "Snap"
 
     if ! command_exists snap; then
-        print_skip "Snap not installed — skipping"
+        print_skip "Snap not installed - skipping"
         return 0
     fi
 
@@ -171,7 +171,7 @@ main() {
     start_time=$(date +%s)
 
     update_system || {
-        print_error "System package update failed — continuing with remaining tasks"
+        print_error "System package update failed - continuing with remaining tasks"
     }
 
     update_flatpak

@@ -7,7 +7,7 @@
      gold #C0AF7F  brass #a99b7a  salmon #e58980
      cream #E1CE98  dim #6d6d6d
 
-   No :root overrides — variables stay on the popup they belong to.
+   No :root overrides - variables stay on the popup they belong to.
 
    Install:
      1. about:config -> toolkit.legacyUserProfileCustomizations.stylesheets = true
@@ -58,7 +58,7 @@ menupopup {
   --panel-border-color: #3D3D3D !important;
   --panel-border-radius: 10px !important;
   --panel-separator-color: #3D3D3D !important;
-  /* hover was #2E2E2E on #252525 — almost invisible */
+  /* hover was #2E2E2E on #252525 - almost invisible */
   --panel-item-hover-bgcolor: #3D382C !important;
   --panel-item-active-bgcolor: #4A4334 !important;
 
@@ -118,7 +118,7 @@ menupopup menu[_moz-menuactive="true"]:not([disabled]),
   outline: none !important;
 }
 
-/* access-key underline (the S in Save, A in As) — slightly brighter on hover */
+/* access-key underline (the S in Save, A in As) - slightly brighter on hover */
 menupopup menuitem[_moz-menuactive="true"] .menu-text,
 menupopup menu[_moz-menuactive="true"] .menu-text,
 menupopup menuitem:hover .menu-text,
