@@ -67,6 +67,7 @@ Harbor Dark.
 │   └── README.md
 ├── git-hooks
 │   ├── pre-commit               # global gitleaks hook for every repo
+│   ├── check-github.sh          # GitHub secret scanning / push protection report
 │   └── install.sh
 ├── fastfetch
 │   ├── config.jsonc             # Harbor Dark fastfetch config
@@ -372,6 +373,16 @@ install once `core.hooksPath` is set.
 git commit --no-verify
 # undo
 git config --global --unset core.hooksPath
+```
+
+`check-github.sh` checks the GitHub side for every repo you own (needs `gh auth
+login`): secret scanning and push protection status plus open alerts. Public
+repos created before the account default was on can still have them off;
+`--fix` turns both on. Private personal repos show `n/a`, the hook covers them.
+
+```bash
+./git-hooks/check-github.sh          # report
+./git-hooks/check-github.sh --fix    # report + enable where missing
 ```
 
 ---
