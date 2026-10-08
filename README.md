@@ -2,9 +2,7 @@
 
 # Pop!_OS · COSMIC · DarkGold
 
-Sibling rice to [Pop_OS-Cosmic-Monochrome](https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome)
-and [Pop_OS-Cosmic-TokyoNight](https://github.com/atraxsrc/Pop_OS-Cosmic-TokyoNight).
-Same machine, same COSMIC desktop, Harbor Dark gold instead of gray or Tokyo Night blue.
+Pop!_OS 24.04 on COSMIC in Harbor Dark gold: desktop, terminal, shell, Firefox, cursor.
 
 Inspired by [omarchy-harbordark-theme](https://github.com/HANCORE-linux/omarchy-harbordark-theme).
 
@@ -16,7 +14,6 @@ Inspired by [omarchy-harbordark-theme](https://github.com/HANCORE-linux/omarchy-
 
 </div>
 
-Keep the Monochrome / Tokyo Night repos. Import this `.ron` when you want the gold look.
 Firefox uses the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on.
 Icons: [Kanagawa](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa).
 Cursor: [Oxygen](https://github.com/wo2ni/Oxygen-Cursors) Vibrant Red, COSMIC-fixed.
@@ -94,9 +91,6 @@ Harbor Dark.
 ├── LICENSE
 └── README.md
 ```
-
-Built from the Monochrome repo layout:
-https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome
 
 ---
 
@@ -345,7 +339,7 @@ cp btop/DarkGold.theme ~/.config/btop/themes/
 
 ### `update_system.sh`
 
-Same updater as Monochrome / Tokyo Night. Headers are coral, success is cream,
+nala + flatpak updater. Headers are coral, success is cream,
 the figlet ramp is olive → gold → cream.
 
 ```bash
@@ -407,15 +401,13 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 
 ---
 
-## Switch back
+## Undo
 
-1. Appearance → Dark → Import `cosmic/Monochrome-Dark.ron` (Monochrome repo)
-   or `cosmic/TokyoNight.ron` (Tokyo Night repo)
-2. Terminal → import Monochrome's `cosmic-term/Monochrome-Dark-term.ron`, or
-   pick your previous scheme for Tokyo Night (no terminal file in that repo)
-3. Disable or replace the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on,
-   then run the other repo's `firefox/install.sh`
+1. Appearance → Dark → pick or import another theme
+2. Terminal → View → Settings → Appearance → Color scheme (dark) → another scheme
+3. Disable the [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) add-on
 4. Cursor: `./cursors/uninstall.sh` (back to the Pop default), then reboot
+5. Config files: each installer left a `*.bak` next to what it replaced
 
 ---
 
@@ -435,8 +427,6 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 | [bat](https://github.com/sharkdp/bat) | `cat` with syntax highlighting (ANSI theme) |
 | [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) | Icon pack |
 | [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor theme (KDE Oxygen designs), COSMIC-fixed |
-| [Pop_OS-Cosmic-Monochrome](https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome) | Layout source |
-| This repo | Harbor Dark / DarkGold on COSMIC |
 
 ## License
 
