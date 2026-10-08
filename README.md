@@ -51,11 +51,16 @@ Harbor Dark.
 ├── assets
 │   ├── cursors/                 # cursor swatch for cursors/README.md
 │   └── screenshot.png           # README screenshot
+├── bat
+│   ├── config                   # --theme="ansi"
+│   └── install.sh
 ├── btop
 │   └── DarkGold.theme           # btop colour theme
 ├── cosmic
 │   ├── DarkGold.ron             # COSMIC Appearance import (Dark)
-│   └── DarkGold-Light.ron       # COSMIC Appearance import (Light)
+│   ├── DarkGold-Light.ron       # COSMIC Appearance import (Light)
+│   ├── config/                  # baseline settings: fonts, icons, terminal look
+│   └── install.sh
 ├── cosmic-term
 │   ├── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
 │   └── DarkGold-Light-term.ron  # COSMIC Terminal colour scheme (Harbor Light)
@@ -75,11 +80,19 @@ Harbor Dark.
 │   └── README.md
 ├── scripts
 │   └── update_system.sh         # nala + flatpak, Harbor Dark ANSI
+├── lsd
+│   ├── config.yaml              # theme: custom
+│   ├── colors.yaml              # permission / size / date / git columns
+│   └── install.sh
+├── starship
+│   ├── starship.toml            # prompt, clock on the right
+│   └── install.sh
+├── zsh
+│   ├── darkgold.zsh             # LS_COLORS, highlighting colours, aliases, starship
+│   └── install.sh
 ├── LICENSE
 └── README.md
 ```
-
-Shell dotfiles stay in the Tokyo Night repo.
 
 Built from the Monochrome repo layout:
 https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome
@@ -97,6 +110,27 @@ applets and system UI (maximized apps stay solid). Adjust it on Appearance →
 Style → Frosted glass after import; those sliders survive a theme switch.
 
 Export from Appearance if you tweak backgrounds / tints so you do not lose them.
+
+### Baseline settings
+
+`cosmic/config/` holds the settings that make up the look and rarely change
+(panel, dock, applets and shortcuts are left out on purpose):
+
+| Where | Setting |
+|-------|---------|
+| Fonts | Interface `Maple Normal UI`, monospace `Maple Mono Normal NFM` |
+| Icons | Kanagawa |
+| Windows | Minimize / maximize buttons hidden, theme applied to GNOME apps |
+| Terminal | Maple Mono 15 (weights 500 / bold 800 / dim 300), 77% opacity, no header bar, Harbor Dark / Harbor Light |
+
+Install the [Maple fonts](https://github.com/subframe7536/maple-font) and the
+Kanagawa icons (see Icons below) and import the terminal schemes first, then:
+
+```bash
+./cosmic/install.sh
+```
+
+It backs up each file it replaces to `*.bak` and COSMIC applies it live.
 
 ---
 
@@ -238,6 +272,62 @@ Hardware / Software / Age boxes. `install.sh` backs up any existing
 fastfetch
 ```
 
+### zsh
+
+`zsh/darkgold.zsh` is the rice part of the shell only: `LS_COLORS` (also used
+by lsd for file names and by the completion menu), DarkGold colours for
+zsh-autosuggestions and zsh-syntax-highlighting, the lsd / bat / nvim aliases
+and the starship prompt. Your own `~/.zshrc` stays private and sources it, so
+PATH tweaks, display scaling and anything personal never land in this repo.
+
+Needs zsh + [oh-my-zsh](https://ohmyz.sh/). `install.sh` clones the two
+plugins if missing and appends one `source` line to `~/.zshrc` (backup in
+`~/.zshrc.bak`):
+
+```bash
+./zsh/install.sh
+exec zsh
+```
+
+In `~/.zshrc` keep `ZSH_THEME=""` and
+`plugins=(git sudo zsh-autosuggestions zsh-syntax-highlighting)`.
+
+### lsd
+
+Two layers: file names are coloured by `LS_COLORS` from `zsh/darkgold.zsh`,
+and `lsd/colors.yaml` colours the other columns (permissions, user, size,
+date, git status) with the nearest 256-colour matches to the palette
+(187 cream, 144 brass, 173 salmon, 167 coral, 102 slate). lsd 1.0.0 (Pop
+24.04) does not accept `#hex` here: one hex value makes it silently drop the
+whole theme. `install.sh` backs up existing files to `*.bak`.
+
+```bash
+./lsd/install.sh
+lsd -l
+```
+
+### bat
+
+`bat/config` is one line, `--theme="ansi"`: bat uses the terminal's 16 ANSI
+colours, so the COSMIC Terminal scheme themes it and it follows Harbor Light
+too. `zsh/darkgold.zsh` aliases `cat` to it. `install.sh` backs up any
+existing `~/.config/bat/config` to `config.bak`.
+
+```bash
+./bat/install.sh
+```
+
+### starship
+
+`starship/starship.toml` is close to the defaults with a `HH:MM` clock on the
+right. It uses the terminal's ANSI colours, so the COSMIC Terminal scheme
+above themes it (the clock's `yellow` is brass `#a99b7a`). `install.sh` backs
+up any existing `~/.config/starship.toml` to `starship.toml.bak`.
+
+```bash
+./starship/install.sh
+```
+
 ### btop
 
 `btop/DarkGold.theme` uses the same palette: charcoal background, coral highlights, brass titles.
@@ -286,7 +376,11 @@ cd Pop_OS-Cosmic-DarkGold
 # optional extra chrome
 # ./firefox/install.sh
 
-# fastfetch + btop (see Terminal extras above)
+# shell + terminal tools (see Terminal extras above)
+./zsh/install.sh
+./lsd/install.sh
+./bat/install.sh
+./starship/install.sh
 ./fastfetch/install.sh
 mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 
@@ -296,6 +390,10 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 
 # icons
 # https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa
+
+# fonts (https://github.com/subframe7536/maple-font), then
+# fonts, icons, terminal look from cosmic/config/
+./cosmic/install.sh
 
 # cursor (then reboot), see cursors/README.md
 ./cursors/install.sh
@@ -325,6 +423,10 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 | [harbordark](https://addons.mozilla.org/en-US/firefox/addon/harbordark/) | Firefox theme |
 | [fastfetch](https://github.com/fastfetch-cli/fastfetch) | System info |
 | [btop](https://github.com/aristocratos/btop) | Resource monitor |
+| [oh-my-zsh](https://ohmyz.sh/) | zsh framework + plugins |
+| [starship](https://starship.rs/) | Prompt |
+| [lsd](https://github.com/lsd-rs/lsd) | `ls` with icons and colours |
+| [bat](https://github.com/sharkdp/bat) | `cat` with syntax highlighting (ANSI theme) |
 | [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) | Icon pack |
 | [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor theme (KDE Oxygen designs), COSMIC-fixed |
 | [Pop_OS-Cosmic-Monochrome](https://github.com/atraxsrc/Pop_OS-Cosmic-Monochrome) | Layout source |
