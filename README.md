@@ -65,6 +65,9 @@ Harbor Dark.
 │   ├── install.sh
 │   ├── uninstall.sh
 │   └── README.md
+├── git-hooks
+│   ├── pre-commit               # global gitleaks hook for every repo
+│   └── install.sh
 ├── fastfetch
 │   ├── config.jsonc             # Harbor Dark fastfetch config
 │   ├── cosmic.txt               # COSMIC logo
@@ -349,6 +352,30 @@ chmod +x scripts/update_system.sh
 
 ---
 
+## Git safety net
+
+`git-hooks/pre-commit` scans every commit in every repo on the machine with
+[gitleaks](https://github.com/gitleaks/gitleaks) and blocks it if a staged
+change looks like a secret (API keys, tokens, private keys). It then runs the
+repo's own `.git/hooks/pre-commit` if there is one, so repos with a
+`.pre-commit-config.yaml` keep working. Works with gitleaks 8.16 (Ubuntu 24.04
+apt) and 8.19+.
+
+`install.sh` copies it to `~/.git-hooks` and sets git's global
+`core.hooksPath`, so new clones are covered without any per-repo setup.
+Run `pre-commit install` in repos that use it first: pre-commit refuses to
+install once `core.hooksPath` is set.
+
+```bash
+./git-hooks/install.sh
+# bypass once, only if you are sure it is a false positive:
+git commit --no-verify
+# undo
+git config --global --unset core.hooksPath
+```
+
+---
+
 ## Setup
 
 ```bash
@@ -397,6 +424,9 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 
 # cursor (then reboot), see cursors/README.md
 ./cursors/install.sh
+
+# secret scan on every commit, every repo (see Git safety net above)
+./git-hooks/install.sh
 ```
 
 ---
@@ -426,6 +456,7 @@ mkdir -p ~/.config/btop/themes && cp btop/DarkGold.theme ~/.config/btop/themes/
 | [lsd](https://github.com/lsd-rs/lsd) | `ls` with icons and colours |
 | [bat](https://github.com/sharkdp/bat) | `cat` with syntax highlighting (ANSI theme) |
 | [Kanagawa icons](https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa) | Icon pack |
+| [gitleaks](https://github.com/gitleaks/gitleaks) | Secret scan on every commit |
 | [Oxygen-Cursors](https://github.com/wo2ni/Oxygen-Cursors) | Cursor theme (KDE Oxygen designs), COSMIC-fixed |
 
 ## License

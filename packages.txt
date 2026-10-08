@@ -13,6 +13,7 @@ bat
 btop
 nala
 fastfetch
+gitleaks
 
 # Not in apt, install by hand:
 #   oh-my-zsh   https://ohmyz.sh/#install, then ./zsh/install.sh for the plugins

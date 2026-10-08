@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Global pre-commit hook: block commits that contain secrets, then run the repo's own hook.
+# Installed by git-hooks/install.sh as core.hooksPath, so it runs in every repo.
+# Bypass once (only if you are sure): git commit --no-verify
+if ! command -v gitleaks >/dev/null 2>&1; then
+    echo "pre-commit: gitleaks not installed, commit blocked. Install it or use --no-verify." >&2
+    exit 1
+fi
+
+# gitleaks 8.19+ has `gitleaks git`; older builds (Ubuntu 24.04 apt ships 8.16) only `protect`
+if gitleaks git --help >/dev/null 2>&1; then
+    scan=(gitleaks git --pre-commit --staged --redact --no-banner --log-level warn .)
+else
+    scan=(gitleaks protect --staged --redact --no-banner --log-level warn)
+fi
+"${scan[@]}" || {
+    echo "pre-commit: possible secret in staged changes, commit blocked." >&2
+    exit 1
+}
+
+# chain to the repo's own .git/hooks/pre-commit (e.g. installed by pre-commit), never to ourselves
+hook="$(git rev-parse --git-common-dir)/hooks/pre-commit"
+if [ -x "$hook" ] && [ "$(realpath "$hook")" != "$(realpath "$0")" ]; then
+    exec "$hook" "$@"
+fi
+exit 0
