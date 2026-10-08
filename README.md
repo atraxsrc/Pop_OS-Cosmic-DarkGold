@@ -90,6 +90,7 @@ Harbor Dark.
 ├── zsh
 │   ├── darkgold.zsh             # LS_COLORS, highlighting colours, aliases, starship
 │   └── install.sh
+├── packages.txt                 # what a fresh install needs (apt + manual)
 ├── LICENSE
 └── README.md
 ```
@@ -359,6 +360,11 @@ chmod +x scripts/update_system.sh
 ```bash
 git clone https://github.com/atraxsrc/Pop_OS-Cosmic-DarkGold.git
 cd Pop_OS-Cosmic-DarkGold
+
+# packages (apt list + manual installs, see the top of packages.txt)
+sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
+grep -v '^#' packages.txt | xargs sudo apt install -y
+chsh -s "$(command -v zsh)"
 
 # desktop
 # Settings → Appearance → Dark → Import cosmic/DarkGold.ron

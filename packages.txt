@@ -1,0 +1,22 @@
+# DarkGold rice: what a fresh Pop!_OS 24.04 needs before the install scripts.
+#
+# apt (fastfetch is not in noble, add its PPA first):
+#   sudo add-apt-repository ppa:zhangsongcui3371/fastfetch
+#   grep -v '^#' packages.txt | xargs sudo apt install -y
+#   chsh -s "$(command -v zsh)"    # then log out and back in
+
+zsh
+git
+curl
+lsd
+bat
+btop
+nala
+fastfetch
+
+# Not in apt, install by hand:
+#   oh-my-zsh   https://ohmyz.sh/#install, then ./zsh/install.sh for the plugins
+#   starship    curl -sS https://starship.rs/install.sh | sh
+#   Maple fonts https://github.com/subframe7536/maple-font (Maple Mono Normal NF + Maple Normal UI)
+#   Kanagawa    https://github.com/Fausto-Korpsvart/Kanagawa-GKT-Theme/tree/main/icons/Kanagawa
+#   neovim      optional, https://github.com/neovim/neovim/releases (the vi/vim/v aliases skip it if missing)
