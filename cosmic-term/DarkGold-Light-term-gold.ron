@@ -1,8 +1,8 @@
 (
-    name: "Harbor Light",
-    foreground: "#1B1B1B",
+    name: "Harbor Light Gold",
+    foreground: "#4F431F",
     cursor: "#655628",
-    bright_foreground: "#000000",
+    bright_foreground: "#1B1B1B",
     dim_foreground: "#6F6C5F",
     normal: (
         black: "#1B1B1B",

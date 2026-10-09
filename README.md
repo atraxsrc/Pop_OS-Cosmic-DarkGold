@@ -60,7 +60,10 @@ Harbor Dark.
 │   └── install.sh
 ├── cosmic-term
 │   ├── DarkGold-term.ron        # COSMIC Terminal colour scheme (Harbor Dark)
-│   └── DarkGold-Light-term.ron  # COSMIC Terminal colour scheme (Harbor Light)
+│   ├── DarkGold-term-gold.ron   # same, gold foreground to match a gold text tint
+│   ├── DarkGold-Light-term.ron        # COSMIC Terminal colour scheme (Harbor Light)
+│   ├── DarkGold-Light-term-gold.ron   # same, dark gold foreground for the gold text tint
+│   └── DarkGold-Light-term-ember.ron  # alternate light scheme (Warm Ember Light)
 ├── cursors/                     # Oxygen-05-Vibrant-Red, COSMIC-fixed
 │   ├── install.sh
 │   ├── uninstall.sh
@@ -110,6 +113,14 @@ Style → Frosted glass after import; those sliders survive a theme switch.
 
 Export from Appearance if you tweak backgrounds / tints so you do not lose them.
 
+**Known COSMIC bug:** moving the frosted glass opacity / thickness sliders can
+reset `text_tint` back to `#FFFFFF`. If your text turns white, re-import
+`cosmic/DarkGold-fixed-text.ron`, which pins the tint to gold `#C0AF7F`.
+In light mode white text on parchment is unreadable, so re-import
+`cosmic/DarkGold-Light-fixed-text.ron` (dark gold `#655628`)
+(upstream fix proposed in
+[libcosmic#1450](https://github.com/pop-os/libcosmic/pull/1450), not merged).
+
 ### Baseline settings
 
 `cosmic/config/` holds the settings that make up the look and rarely change
@@ -144,6 +155,12 @@ The desktop `.ron` does not colour ANSI text.
 If a profile is set as default, set the scheme on that profile too or the
 dropdown will look like it did nothing.
 
+Using the gold text tint (`DarkGold-fixed-text.ron`)? Import
+`cosmic-term/DarkGold-term-gold.ron` instead and pick **Harbor Dark Gold**.
+Same palette, but plain text is gold `#E1CE98` (the wallpaper's bone
+highlight) instead of cream, with a gold cursor. Bold / bright text stays
+cream `#EFEBDC` so it still stands out.
+
 Nala progress boxes use Rich `green`. In this scheme that slot is gold `#C0AF7F`.
 
 ---
@@ -160,6 +177,15 @@ flips between them.
 **Terminal:** View → Color schemes… → **Light** tab → **Import** →
 `cosmic-term/DarkGold-Light-term.ron`, then View → Settings → Appearance →
 Color scheme (light) → **Harbor Light**
+
+With the gold text tint (`DarkGold-Light-fixed-text.ron`), import
+`cosmic-term/DarkGold-Light-term-gold.ron` and pick **Harbor Light Gold**
+instead: same palette, plain text in dark gold `#4F431F` with a gold cursor,
+bold / bright text in charcoal `#1B1B1B`.
+
+`cosmic-term/DarkGold-Light-term-ember.ron` is an older alternate, **Warm Ember
+Light**: coral in the green slot and steel blue in the blue slot, so it does
+not follow the table below.
 
 Same palette, flipped: a darker parchment window background with lighter
 cards on top so panels stand out, charcoal text, and deeper shades of the
