@@ -370,6 +370,11 @@ chmod +x scripts/update_system.sh
 
 ## Git safety net
 
+> This section grew into its own repo, **[git-safety-net](https://github.com/atraxsrc/git-safety-net)**:
+> the same hook plus `scan.sh` (scan any repo's history and files), `status.sh`
+> (am I protected?), a cheat sheet and a full walkthrough for when something
+> gets flagged.
+
 `git-hooks/pre-commit` scans every commit in every repo on the machine with
 [gitleaks](https://github.com/gitleaks/gitleaks) and blocks it if a staged
 change looks like a secret (API keys, tokens, private keys). It then runs the
