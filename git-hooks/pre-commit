@@ -9,12 +9,13 @@ fi
 
 # gitleaks 8.19+ has `gitleaks git`; older builds (Ubuntu 24.04 apt ships 8.16) only `protect`
 if gitleaks git --help >/dev/null 2>&1; then
-    scan=(gitleaks git --pre-commit --staged --redact --no-banner --log-level warn .)
+    scan=(gitleaks git --pre-commit --staged -v --redact --no-banner --log-level warn .)
 else
-    scan=(gitleaks protect --staged --redact --no-banner --log-level warn)
+    scan=(gitleaks protect --staged -v --redact --no-banner --log-level warn)
 fi
 "${scan[@]}" || {
     echo "pre-commit: possible secret in staged changes, commit blocked." >&2
+    echo "  false positive? add its Fingerprint to .gitleaksignore, or end the line with: gitleaks:allow" >&2
     exit 1
 }
 
